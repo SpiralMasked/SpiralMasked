@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 · Buildly</title>
+<meta name="robots" content="noindex" />
+<style>
+  :root {
+    --bg: #0a0a10;
+    --surface: #131320;
+    --surface-2: #1a1a28;
+    --border: #2a2a3c;
+    --text: #f2f2f7;
+    --muted: #8e8ea3;
+    --brand: #1c69d4;
+    --brand-2: #0066b1;
+    --m-red: #c8102e;
+    --m-tricolor: linear-gradient(135deg, #1c69d4 0%, #6c5ce7 50%, #c8102e 100%);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.6);
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "SF Pro Display", Roboto, Inter, sans-serif;
+    background: radial-gradient(ellipse at top, #16162a 0%, var(--bg) 60%);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    display: grid; place-items: center;
+    padding: 24px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 48px 36px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--m-tricolor);
+  }
+  .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: rgba(200,16,46,0.12);
+    color: var(--m-red);
+    border: 1px solid rgba(200,16,46,0.3);
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.2px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-size: 96px;
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -4px;
+    margin: 8px 0 12px;
+    background: var(--m-tricolor);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  h2 {
+    font-size: 20px; font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+  p { color: var(--muted); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+  code {
+    display: inline-block;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 12px;
+    color: var(--muted);
+    word-break: break-all;
+  }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 13px; font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text);
+    transition: all 0.15s;
+    font-family: inherit;
+  }
+  .btn:hover { background: var(--surface); border-color: #3a3a52; }
+  .btn-primary {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: var(--brand-2);
+    border-color: var(--brand-2);
+    box-shadow: 0 4px 12px rgba(28,105,212,0.35);
+  }
+  .footer {
+    margin-top: 24px;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-weight: 600;
+  }
+  .footer span { color: var(--brand); }
+</style>
+</head>
+<body>
+  <main class="card" role="main">
+    <div class="badge">Off Track</div>
+    <h1>404</h1>
+    <h2>Wrong garage.</h2>
+    <p>
+      The page you're looking for isn't here. It may have been moved, renamed, or never existed in the first place.
+    </p>
+    <p><code id="path"></code></p>
+    <div class="actions">
+      <a href="./index.html" class="btn btn-primary">← Back to Buildly</a>
+      <a href="https://github.com/SpiralMasked/SpiralMasked" class="btn" rel="noopener">View on GitHub</a>
+    </div>
+    <div class="footer">Buildly · <span>Car Build Planner</span></div>
+  </main>
+  <script>
+    // Show the path the user tried to reach — handy for debugging.
+    var p = document.getElementById('path');
+    if (p) p.textContent = window.location.pathname || '(unknown path)';
+    // Best-effort: if they came from the same site and we know the home is index.html,
+    // bounce back after 8s — but only on actual 404 navigations, not direct hits.
+    if (document.referrer && new URL(document.referrer, location.href).origin === location.origin) {
+      var t = setTimeout(function(){ window.location.href = './index.html'; }, 8000);
+      // Cancel auto-redirect if user interacts (hover the button area).
+      document.addEventListener('pointermove', function(){ clearTimeout(t); }, { once: true });
+    }
+  </script>
+</body>
+</html>
